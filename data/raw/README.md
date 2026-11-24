@@ -1,0 +1,1 @@
+API-Bank dataset is not redistributed. Clone https://github.com/AlibabaResearch/DAMO-ConvAI and checkout commit faf754671f5b850e1b4d1ff870db37a6a2480df5 into data/raw/DAMO-ConvAI. If Git is unavailable, download https://github.com/AlibabaResearch/DAMO-ConvAI/archive/faf754671f5b850e1b4d1ff870db37a6a2480df5.zip and extract so data/raw/DAMO-ConvAI/api-bank exists.

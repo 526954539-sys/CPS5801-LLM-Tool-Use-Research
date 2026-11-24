@@ -1,0 +1,233 @@
+{
+  "dataset": "API-Bank",
+  "dataset_commit": "faf754671f5b850e1b4d1ff870db37a6a2480df5",
+  "created_at_utc": "2026-11-18T11:02:35.164029+00:00",
+  "global_rules": {
+    "goal_order": "Order is irrelevant only when explicitly listed as independent.",
+    "task_success": "All required goals must be completed and final answer must pass separate semantic review.",
+    "alternative_sequences": "Accept every sequence explicitly listed for the task.",
+    "secrets": "Never include original credentials or live tokens in prompts, logs, or reports.",
+    "latency_and_tokens": "Count all model prompts, responses, tool-selection turns, and repair turns.",
+    "mock_label": "Every adapted task must remain labelled adapted_mock_task."
+  },
+  "manifest_version": "v1",
+  "manifest_role": "test",
+  "approval_state": "FROZEN",
+  "task_count": 7,
+  "tasks": [
+    {
+      "task_id": "L1-017",
+      "provenance": "original_api_bank_task",
+      "status": "frozen_test",
+      "user_request": "Can you perform some basic arithmetic calculation for me?",
+      "scripted_user_followup": "What is the result of (5+3)*6?",
+      "goals": [
+        {
+          "goal_id": "calculate",
+          "tool_name": "Calculator",
+          "arguments": {
+            "formula": "(5+3)*6"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "Calculator"
+        ]
+      ],
+      "clarification_policy": "required_before_calculation",
+      "expected_result": 48.0,
+      "user_turns": [
+        "Can you perform some basic arithmetic calculation for me?",
+        "What is the result of (5+3)*6?"
+      ],
+      "dialogue_policy": "Replay user turns sequentially. After each user turn, allow the model to respond and complete any appropriate tool interaction before revealing the next user turn. Do not expose later user turns early.",
+      "prior_pilot_exposure": false
+    },
+    {
+      "task_id": "L1-116",
+      "provenance": "original_api_bank_task",
+      "status": "frozen_test",
+      "user_request": "Can you search for news articles about sustainable development goals?",
+      "scripted_user_followup": "the sustainable development?",
+      "goals": [
+        {
+          "goal_id": "search_articles",
+          "tool_name": "SearchEngine",
+          "arguments": {
+            "keyword": "the sustainable development"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "SearchEngine"
+        ]
+      ],
+      "clarification_policy": "keyword_clarification_in_original_dialogue",
+      "note": "SearchEngine uses the local API-Bank BM25 corpus, not live web search.",
+      "user_turns": [
+        "Can you search for news articles about sustainable development goals?",
+        "the sustainable development?"
+      ],
+      "dialogue_policy": "Replay user turns sequentially. After each user turn, allow the model to respond and complete any appropriate tool interaction before revealing the next user turn. Do not expose later user turns early.",
+      "prior_pilot_exposure": true
+    },
+    {
+      "task_id": "L2-058",
+      "provenance": "original_api_bank_task",
+      "status": "frozen_test",
+      "user_request": "Can you tell me what happened on April 21st in history?",
+      "goals": [
+        {
+          "goal_id": "history_lookup",
+          "tool_name": "QueryHistoryToday",
+          "arguments": {
+            "date": "04-21"
+          }
+        },
+        {
+          "goal_id": "calculate",
+          "tool_name": "Calculator",
+          "arguments": {
+            "formula": "(4*2)/(1+3)"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "QueryHistoryToday",
+          "Calculator"
+        ]
+      ],
+      "goal_structure": "two_independent_goals",
+      "clarification_policy": "not_required",
+      "note": "The original dialogue contains two separate sequential user requests. The history lookup and arithmetic calculation are independent goals; the first request is history, followed by calculation. The history output is not an input to the calculation.",
+      "user_turns": [
+        "Can you tell me what happened on April 21st in history?",
+        "Can you calculate (4*2)/(1+3)?"
+      ],
+      "scripted_user_followup": "Can you calculate (4*2)/(1+3)?",
+      "dialogue_policy": "Replay user turns sequentially. After each user turn, allow the model to respond and complete any appropriate tool interaction before revealing the next user turn. Do not expose later user turns early.",
+      "goal_order_flexibility": "Goals are semantically independent, but the original sequential dialogue constrains the observable call order.",
+      "prior_pilot_exposure": true
+    },
+    {
+      "task_id": "L2-061",
+      "provenance": "original_api_bank_task",
+      "status": "frozen_test",
+      "user_request": "Can you tell me about any historical events that happened on April 21st?",
+      "scripted_user_followup": "Just on this day in the past.",
+      "goals": [
+        {
+          "goal_id": "history_lookup",
+          "tool_name": "QueryHistoryToday",
+          "arguments": {
+            "date": "04-21"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "QueryHistoryToday"
+        ]
+      ],
+      "clarification_policy": "clarify_temporal_scope_before_lookup",
+      "note": "The API accepts month and day only; it cannot distinguish years.",
+      "user_turns": [
+        "Can you tell me about any historical events that happened on April 21st?",
+        "Just on this day in the past."
+      ],
+      "dialogue_policy": "Replay user turns sequentially. After each user turn, allow the model to respond and complete any appropriate tool interaction before revealing the next user turn. Do not expose later user turns early.",
+      "prior_pilot_exposure": true
+    },
+    {
+      "task_id": "L2-006",
+      "provenance": "original_api_bank_task",
+      "status": "frozen_test",
+      "user_request": "Can you help me calculate (5*6)/(2+3)?",
+      "goals": [
+        {
+          "goal_id": "calculate",
+          "tool_name": "Calculator",
+          "arguments": {
+            "formula": "(5*6)/(2+3)"
+          }
+        },
+        {
+          "goal_id": "history_lookup",
+          "tool_name": "QueryHistoryToday",
+          "arguments": {
+            "date": "12-10"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "Calculator",
+          "QueryHistoryToday"
+        ]
+      ],
+      "goal_structure": "two_independent_goals",
+      "clarification_policy": "not_required",
+      "expected_result": 6.0,
+      "note": "The original dialogue contains two separate sequential user requests. The calculator request comes first, followed by a December 10 historical lookup. The two goals do not depend on each other's outputs.",
+      "user_turns": [
+        "Can you help me calculate (5*6)/(2+3)?",
+        "Can you show me the historical events that happened on December 10th?"
+      ],
+      "scripted_user_followup": "Can you show me the historical events that happened on December 10th?",
+      "dialogue_policy": "Replay user turns sequentially. After each user turn, allow the model to respond and complete any appropriate tool interaction before revealing the next user turn. Do not expose later user turns early.",
+      "goal_order_flexibility": "Goals are semantically independent, but the original sequential dialogue constrains the observable call order.",
+      "prior_pilot_exposure": true
+    },
+    {
+      "task_id": "L3-1",
+      "provenance": "original_api_bank_task_with_reconstructed_tool_arguments",
+      "status": "frozen_test",
+      "user_request": "Calculate 25*3+7/3.",
+      "goals": [
+        {
+          "goal_id": "calculate",
+          "tool_name": "Calculator",
+          "arguments": {
+            "formula": "25*3+7/3"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "Calculator"
+        ]
+      ],
+      "clarification_policy": "not_required",
+      "expected_result": 77.33333333333333,
+      "parameter_provenance": "The original API-Bank dialogue contains blank API-call content. The Calculator formula was reconstructed from the original task expression and validated against the native local adapter.",
+      "prior_pilot_exposure": false
+    },
+    {
+      "task_id": "L3-2",
+      "provenance": "original_api_bank_task_with_reconstructed_tool_arguments",
+      "status": "frozen_test",
+      "user_request": "What is the square of 8?",
+      "goals": [
+        {
+          "goal_id": "calculate",
+          "tool_name": "Calculator",
+          "arguments": {
+            "formula": "8*8"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "Calculator"
+        ]
+      ],
+      "clarification_policy": "not_required",
+      "expected_result": 64.0,
+      "parameter_provenance": "The original API-Bank dialogue contains blank API-call content. The formula 8*8 is a researcher reconstruction of the natural-language request 'square of 8', validated against the native local adapter.",
+      "prior_pilot_exposure": false
+    }
+  ]
+}

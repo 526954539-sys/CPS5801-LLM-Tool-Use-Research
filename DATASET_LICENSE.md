@@ -1,0 +1,1 @@
+API-Bank upstream repository: https://github.com/AlibabaResearch/DAMO-ConvAI. This package records pinned commit faf754671f5b850e1b4d1ff870db37a6a2480df5 and provides retrieval instructions, not a redistributed dataset. Check upstream license and terms. L3-1 and L3-2 include researcher-reconstructed tool arguments.

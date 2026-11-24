@@ -1,0 +1,88 @@
+{
+  "dataset": "API-Bank",
+  "dataset_commit": "faf754671f5b850e1b4d1ff870db37a6a2480df5",
+  "created_at_utc": "2026-11-18T11:02:35.164029+00:00",
+  "global_rules": {
+    "goal_order": "Order is irrelevant only when explicitly listed as independent.",
+    "task_success": "All required goals must be completed and final answer must pass separate semantic review.",
+    "alternative_sequences": "Accept every sequence explicitly listed for the task.",
+    "secrets": "Never include original credentials or live tokens in prompts, logs, or reports.",
+    "latency_and_tokens": "Count all model prompts, responses, tool-selection turns, and repair turns.",
+    "mock_label": "Every adapted task must remain labelled adapted_mock_task."
+  },
+  "manifest_version": "v1",
+  "manifest_role": "development",
+  "approval_state": "FROZEN",
+  "task_count": 3,
+  "tasks": [
+    {
+      "task_id": "L1-016",
+      "provenance": "original_api_bank_task",
+      "status": "development_only",
+      "user_request": "Can you calculate (5+6)*3 for me?",
+      "goals": [
+        {
+          "goal_id": "calculate",
+          "tool_name": "Calculator",
+          "arguments": {
+            "formula": "(5+6)*3"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "Calculator"
+        ]
+      ],
+      "clarification_policy": "not_required",
+      "expected_result": 33.0,
+      "prior_pilot_exposure": true
+    },
+    {
+      "task_id": "L1-100",
+      "provenance": "original_api_bank_task",
+      "status": "development_only",
+      "user_request": "Can you please tell me which devices are included in the Morning Routine scene?",
+      "goals": [
+        {
+          "goal_id": "query_scene",
+          "tool_name": "QueryScene",
+          "arguments": {
+            "name": "Morning Routine"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "QueryScene"
+        ]
+      ],
+      "clarification_policy": "not_required",
+      "expected_output_review": "Check that the answer reflects the returned scene devices.",
+      "prior_pilot_exposure": true
+    },
+    {
+      "task_id": "L1-128",
+      "provenance": "original_api_bank_task",
+      "status": "development_only",
+      "user_request": "Can you help me search artificial intelligence on Wikipedia?",
+      "goals": [
+        {
+          "goal_id": "wiki_lookup",
+          "tool_name": "Wiki",
+          "arguments": {
+            "keyword": "artificial intelligence"
+          }
+        }
+      ],
+      "valid_tool_sequences": [
+        [
+          "Wiki"
+        ]
+      ],
+      "clarification_policy": "not_required",
+      "note": "Wiki resolves against the local API-Bank knowledge base.",
+      "prior_pilot_exposure": true
+    }
+  ]
+}

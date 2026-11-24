@@ -1,0 +1,54 @@
+{
+  "dataset": "API-Bank",
+  "dataset_commit": "faf754671f5b850e1b4d1ff870db37a6a2480df5",
+  "created_at_utc": "2026-11-18T11:02:35.164029+00:00",
+  "global_rules": {
+    "goal_order": "Order is irrelevant only when explicitly listed as independent.",
+    "task_success": "All required goals must be completed and final answer must pass separate semantic review.",
+    "alternative_sequences": "Accept every sequence explicitly listed for the task.",
+    "secrets": "Never include original credentials or live tokens in prompts, logs, or reports.",
+    "latency_and_tokens": "Count all model prompts, responses, tool-selection turns, and repair turns.",
+    "mock_label": "Every adapted task must remain labelled adapted_mock_task."
+  },
+  "experiment_id": "CPS5801_TOOL_USE_FORMAL_V1",
+  "approval_state": "FROZEN",
+  "models": [
+    {
+      "tag": "llama3.1:8b",
+      "digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e"
+    },
+    {
+      "tag": "qwen2.5:7b",
+      "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e"
+    }
+  ],
+  "prompting_packages": [
+    "P1_ZERO_SHOT_DIRECT",
+    "P2_FEW_SHOT_DIRECT",
+    "P3_ZERO_SHOT_REACT"
+  ],
+  "package_interpretation": "Three prompting packages, not a factorial isolation of zero-shot/few-shot and reasoning format. P2 contains three demonstrations; P3 is zero-shot ReAct-like and contains no demonstrations.",
+  "temperature": 0,
+  "seed": 42,
+  "repetitions": 3,
+  "repetition_ids": [
+    1,
+    2,
+    3
+  ],
+  "repetition_interpretation": "Repeated executions under fixed decoding settings; not independent stochastic samples.",
+  "development_manifest": "configs/development_tasks_v2_frozen.json",
+  "test_manifest": "configs/test_tasks_v1_frozen.json",
+  "output_jsonl": "results/formal_experiment_runs_v1.jsonl",
+  "execution_policy": "Sequential; one model at a time; no parallel GPU runs.",
+  "expected_run_count": 126,
+  "pilot_exposure_note": "Four test tasks have prior exploratory A5000 pilot exposure. Prior pilot records are excluded from confirmatory result calculations; only new runs in the formal output file count.",
+  "excluded_tasks": {
+    "L1-102": "Exact duplicate goal/arguments of development task L1-100.",
+    "L1-084": "Adapted mock task; optional second benchmark, excluded from primary set.",
+    "L2-001": "Adapted mock task; optional second benchmark, excluded from primary set."
+  },
+  "provenance_note": "L3-1 and L3-2 are original API-Bank tasks with researcher-reconstructed tool arguments; preserve this provenance in reporting.",
+  "latency_and_token_scope": "Include all model prompts, responses, tool-selection turns, repair turns, and few-shot demonstration context. Report task latency and end-to-end latency separately.",
+  "semantic_review": "Task success requires separate semantic review of the final answer. Do not treat automatic tool-goal completion alone as final task success."
+}
